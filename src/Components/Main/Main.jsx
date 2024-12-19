@@ -34,18 +34,27 @@ function Main({details, setDetails}) {
         : 
         <div className="list">
             <div className="input-deild">
-            <input type="text" onChange={(e) => setMovieName(e.target.value)} placeholder='Enter Movie Name "Jawan"' />
-            <button onClick={fetchMovies}>Search</button>
+            <input 
+            className='w-64 border border-black px-4 py-2 mr-8 m-6 rounded text-x'
+            type="text" onChange={(e) => setMovieName(e.target.value)} 
+            placeholder='Enter Movie Name "Jawan"' />
+            <button 
+            className='px-4 py-2 bg-black text-white rounded m-6'
+            onClick={fetchMovies}>Search</button>
         </div>
             {movies.map((movie, index) => (
-                <div className="movie" key={index}>
-                    <img src={movie.Poster} alt="Poster is not Avalable" />
-                    <div className="details">
-                        <h3>{movie.Title}</h3>
-                        <p>Type : {movie.Type}</p>
-                        <p>Year : {movie.Year}</p>
+                <div className="movie h-96 mb-5 p-3" key={index}>
+                    <img 
+                    className='w-64 h-80 rounded object-cover'
+                    src={movie.Poster} alt="Poster is not Avalable" />
+                    <div className="details flex flex-col mt-10">
+                        <h3 className='font-bold text-2xl font-serif underline'>{movie.Title}</h3>
+                        <p className='text-xl font-semibold font-serif'>Type : <span className='text-xl font-normal'>{movie.Type}</span></p>
+                        <p className='text-xl font-semibold font-serif'>Year : <span className='text-xl font-normal'>{movie.Year}</span></p>
                     </div>
-                    <button onClick={() => callDeatils(movie.imdbID)}>Details</button>
+                    <button 
+                    className='px-4 py-2 bg-black text-white rounded m-6 hover:shadow-lg active:bg-gray-400'
+                    onClick={() => callDeatils(movie.imdbID)}>Details</button>
                 </div>
             ))}
         </div>}
