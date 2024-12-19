@@ -1,0 +1,9 @@
+.details-container {
+    position: relative;
+    width: 100%;
+}
+.back {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
