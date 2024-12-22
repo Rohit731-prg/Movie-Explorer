@@ -71,7 +71,7 @@ function Main({ details, setDetails }) {
                   />
                   <button
                     onClick={() => callDeatils(movie.imdbID)}
-                    className="mt-3 px-4 py-2 text-white bg-slate-900 rounded-full font-semibold"
+                    className="mt-3 px-4 py-2 text-white bg-slate-900 rounded-full font-semibold hover:bg-slate-500 hover:text-black transition duration-300"
                   >
                     Details
                   </button>
