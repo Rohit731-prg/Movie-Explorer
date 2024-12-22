@@ -1,65 +1,88 @@
-import React, { useEffect, useState } from 'react'
-import Details from '../Details/Details';
-import './Main.css'
+import React, { useEffect, useState } from "react";
+import Details from "../Details/Details";
 
-function Main({details, setDetails}) {
-    
-    const [movieName, setMovieName] = useState('Jawan');
-    const [movies, setMovies] = useState([]);
-    const [imdbInfo, setImdbInfo] = useState('');
+function Main({ details, setDetails }) {
+  const [movieName, setMovieName] = useState("Jawan");
+  const [movies, setMovies] = useState([]);
+  const [imdbInfo, setImdbInfo] = useState("");
 
-    async function fetchMovies() {
-        await fetch(`https://www.omdbapi.com/?s=${movieName}&apikey=7d1e31d7`)
-        .then(res => res.json())
-        .then(data => {
-            setMovies(data.Search);
-        })
-        .catch(err => console.log(err));
-    }
+  async function fetchMovies() {
+    await fetch(`https://www.omdbapi.com/?s=${movieName}&apikey=7d1e31d7`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMovies(data.Search);
+      })
+      .catch((err) => console.log(err));
+  }
 
-    useEffect(() => {
-        fetchMovies();
-    }, []);
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
-    const callDeatils = (info) => {
-        setImdbInfo(info);
-        setDetails(true);
-    }
+  const callDeatils = (info) => {
+    setImdbInfo(info);
+    setDetails(true);
+  };
+
   return (
-    <div className='main-container'>
-        {details ? <Details 
-        details={details}
-        setDetails={setDetails}
-        imdbInfo={imdbInfo} /> 
-        : 
-        <div className="list">
-            <div className="input-deild">
-            <input 
-            className='w-64 border border-black px-4 py-2 mr-8 m-6 rounded text-x'
-            type="text" onChange={(e) => setMovieName(e.target.value)} 
-            placeholder='Enter Movie Name "Jawan"' />
-            <button 
-            className='px-4 py-2 bg-black text-white rounded m-6'
-            onClick={fetchMovies}>Search</button>
-        </div>
-            {movies.map((movie, index) => (
-                <div className="movie h-96 mb-5 p-3" key={index}>
-                    <img 
-                    className='w-64 h-80 rounded object-cover'
-                    src={movie.Poster} alt="Poster is not Avalable" />
-                    <div className="details flex flex-col mt-10">
-                        <h3 className='font-bold text-2xl font-serif underline'>{movie.Title}</h3>
-                        <p className='text-xl font-semibold font-serif'>Type : <span className='text-xl font-normal'>{movie.Type}</span></p>
-                        <p className='text-xl font-semibold font-serif'>Year : <span className='text-xl font-normal'>{movie.Year}</span></p>
-                    </div>
-                    <button 
-                    className='px-4 py-2 bg-black text-white rounded m-6 hover:shadow-lg active:bg-gray-400'
-                    onClick={() => callDeatils(movie.imdbID)}>Details</button>
+    <>
+      {details ? (
+        <Details
+          details={details}
+          setDetails={setDetails}
+          imdbInfo={imdbInfo}
+        />
+      ) : (
+        <div className="w-full h-screen bg-teal-500 flex items-center justify-center">
+          <div
+            className="w-10/12 h-4/5 p-8 rounded-md flex flex-col items-center justify-center"
+            style={{
+              boxShadow: "5px 5px 10px black",
+              background: "linear-gradient(#68b4f7, white)",
+            }}
+          >
+            <h1 className="text-4xl font-bold font-times text-slate-900 mb-4 text-center">
+              Movie Explorer
+            </h1>
+            <div className="my-3 w-3/6 flex items-center justify-between bg-white rounded-full overflow-hidden">
+              <input
+                type="text"
+                placeholder='Enter Movie Name "Jawan"'
+                onChange={(e) => setMovieName(e.target.value)}
+                className="border-none outline-none p-2 w-3/4 pl-4"
+              />
+              <button
+                onClick={fetchMovies}
+                className="bg-slate-200 h-full w-1/4"
+              >
+                🔍
+              </button>
+            </div>
+            <div className="w-full h-72 flex overflow-x-auto space-x-4 p-4 mt-10">
+              {movies.map((movie, index) => (
+                <div
+                  key={index}
+                  className="min-w-[160px] h-full flex flex-col items-center"
+                >
+                  <img
+                    src={movie.Poster}
+                    alt="poster not available"
+                    className="object-cover rounded-xl w-full h-48"
+                  />
+                  <button
+                    onClick={() => callDeatils(movie.imdbID)}
+                    className="mt-3 px-4 py-2 text-white bg-slate-900 rounded-full font-semibold"
+                  >
+                    Details
+                  </button>
                 </div>
-            ))}
-        </div>}
-    </div>
-  )
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
-export default Main
+export default Main;

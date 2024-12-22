@@ -10,6 +10,7 @@ function Details({ details, setDetails, imdbInfo }) {
         `http://www.omdbapi.com/?i=${imdbInfo}&apikey=7d1e31d7`
       );
       const data = await response.json();
+      console.log(data);
       setAllDetails(data);
     } catch (err) {
       console.error(err);
@@ -21,50 +22,86 @@ function Details({ details, setDetails, imdbInfo }) {
   }, []);
 
   return (
-    <div className="details-container flex justify-center gap-10 flex-row p-10 bg-gray-100">
-      {/* Back Button */}
-      <button
-        className="back bg-black text-white px-4 py-2 font-semibold font-serif rounded hover:bg-gray-800 active:bg-white active:text-black active:border border-black"
-        onClick={() => setDetails(false)}
+    <div className="w-full h-screen bg-gray-100 flex items-center justify-center">
+      <div
+        className="w-4/5 h-5/6 bg-white rounded-lg p-8 flex flex-row relative"
+        style={{ boxShadow: "0 0 10px black" }}
       >
-        Back
-      </button>
-
-      {/* Basic Info */}
-      <div className="basic-info w-1/4">
-        <h1 className="text-5xl font-serif">{allDetails.Title}</h1>
-        <p className="font-times text-2xl text-gray-700">{allDetails.Country}</p>
-        <p className="text-lg text-gray-600">
-          <span className="text-2xl font-medium">Year</span>: {allDetails.Year}
-          <span className="ml-4">
-            <span className="text-2xl font-medium">Runtime</span>: {allDetails.Runtime}
-          </span>
-        </p>
-        <img
-          className="my-6 rounded shadow-md"
-          src={allDetails.Poster}
-          alt="Poster not available"
-        />
-        <h3 className="text-lg text-gray-800">Released Date: {allDetails.Released}</h3>
-        <h4 className="text-lg text-gray-800">Language: {allDetails.Language}</h4>
-        <p className="text-gray-700 mt-4">{allDetails.Plot}</p>
-      </div>
-
-      {/* Middle Info */}
-      <div className="mid-info pt-20">
-        <h2 className="text-2xl font-semibold">{allDetails.Genre}</h2>
-        <p className="text-gray-700">
-          <span className="font-medium">IMDB:</span> {allDetails.imdbRating}
-        </p>
-        <h4 className="text-gray-800">Directors: {allDetails.Director}</h4>
-        <h4 className="text-gray-800">Writer: {allDetails.Writer}</h4>
-        <h4 className="text-gray-800">Actors: {allDetails.Actors}</h4>
-      </div>
-
-      {/* Last Info */}
-      <div className="last-info pt-20 ml-10">
-        <h2 className="text-xl font-semibold">Awards: {allDetails.Awards}</h2>
-        <h4 className="text-gray-800">BoxOffice: {allDetails.BoxOffice}</h4>
+        <div className="w-1/3 flex flex-col pr-4">
+          <p className="text-4xl font-bold font-times text-slate-700 mb-4">
+            Movie Details
+          </p>
+          <p className="text-2xl font-bold font-times text-slate-600 mb-4">
+            Movie Name :{" "}
+            <span className="text-3xl text-slate-900">{allDetails.Title}</span>
+          </p>
+          <p className="text-xl text-slate-900 font-semibold mb-7">
+            {allDetails.Plot}
+          </p>
+          <p className="text-2xl font-bold font-times text-slate-600 mb-4">
+            Year :{" "}
+            <span className="text-3xl text-slate-900">{allDetails.Year}</span>
+          </p>
+          <p className="text-2xl font-bold font-times text-slate-600 mb-4">
+            Country :{" "}
+            <span className="text-3xl text-slate-900">
+              {allDetails.Country}
+            </span>
+          </p>
+          <p className="text-2xl font-bold font-times text-slate-600 mb-4">
+            Language :{" "}
+            <span className="text-3xl text-slate-900">
+              {allDetails.Language}
+            </span>
+          </p>
+          <img
+            className="w-20 h-20 object-cover rounded-2xl"
+            src="https://media2.giphy.com/media/lrylNue4ExZM5GLoDQ/giphy.webp?cid=790b76114a8a0bvqubxdadrjm4y7oanvvyd3kij5s6ck4zhg&ep=v1_gifs_search&rid=giphy.webp&ct=g"
+            alt=""
+          />
+          <button
+            onClick={() => setDetails(false)}
+            className="absolute bottom-5 left-5 bg-slate-900 text-white py-4 px-6 rounded-full font-semibold text-2xl"
+          >
+            Back to Home
+          </button>
+        </div>
+        <div className="w-1/3 flex flex-col">
+          <p className="text-xl font-bold font-times text-slate-700 mb-4 text-center">
+            Poster
+          </p>
+          <img
+            src={allDetails.Poster}
+            alt="Poster is not Available"
+            className="w-full h-4/5 object-cover rounded-lg"
+            style={{ boxShadow: "0 0 15px black" }}
+          />
+          <div className="flex justify-between mt-6">
+            <p className="text-xl font-bold text-slate-900">
+              <span className="text-xl text-slate-700">Runtime : </span>
+              {allDetails.Runtime}
+            </p>
+            <p className="text-xl font-bold text-slate-900">
+              <span className="text-xl text-slate-700">Released : </span>
+              {allDetails.Released}
+            </p>
+          </div>
+        </div>
+        <div className="w-1/3 flex flex-col pl-6">
+            <p className="text-2xl text-slate-800 font-bold mt-8">{allDetails.Genre}</p>
+            <p className="text-3xl font-bold text-slate-900">IMDb : <span className="text-xl text-slate-700">{allDetails.imdbRating}</span></p>
+            <p className="text-xl font-bold text-slate-900 my-3">Type : <span className="text-xl text-slate-700">{allDetails.Type}</span></p>
+            <p className="text-xl font-bold text-slate-900">Actors</p>
+            <p className="text-xl text-slate-700 mb-5">{allDetails.Actors}</p>
+            <p className="text-xl font-bold text-slate-900">Director</p>
+            <p className="text-xl text-slate-700 mb-5">{allDetails.Director}</p>
+            <p className="text-xl font-bold text-slate-900">Writer</p>
+            <p className="text-xl text-slate-700 mb-5">{allDetails.Writer}</p>
+            <p className="text-xl font-bold text-slate-900">Awards</p>
+            <p className="text-xl text-slate-700 mb-5">{allDetails.Awards}</p>
+            <p className="text-xl font-bold text-slate-900">BoxOffice</p>
+            <p className="text-xl text-slate-700 mb-5">{allDetails.BoxOffice}</p>
+        </div>
       </div>
     </div>
   );
