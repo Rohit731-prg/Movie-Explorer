@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./Details.css";
 
 function Details({ details, setDetails, imdbInfo }) {
   const [allDetails, setAllDetails] = useState([]);

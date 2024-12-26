@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Details from "../Details/Details";
+import ErrorPage from "./ErrorPage";
 
 function Main({ details, setDetails }) {
-  const [movieName, setMovieName] = useState("Jawan");
+  const [movieName, setMovieName] = useState("Naruto");
   const [movies, setMovies] = useState([]);
   const [imdbInfo, setImdbInfo] = useState("");
+  const [hasError, setHasError] = useState(false); // State to track errors
 
   async function fetchMovies() {
-    await fetch(`https://www.omdbapi.com/?s=${movieName}&apikey=7d1e31d7`)
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      setHasError(false); // Reset error state before fetching
+      const res = await fetch(`https://www.omdbapi.com/?s=${movieName}&apikey=7d1e31d7`);
+      const data = await res.json();
+      if (data.Response === "True") {
         setMovies(data.Search);
-      })
-      .catch((err) => console.log(err));
+      } else {
+        throw new Error(data.Error);
+      }
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      setHasError(true); // Set error state if an error occurs
+    }
   }
 
   useEffect(() => {
@@ -23,6 +32,10 @@ function Main({ details, setDetails }) {
     setImdbInfo(info);
     setDetails(true);
   };
+
+  if (hasError) {
+    return <ErrorPage />;
+  }
 
   return (
     <>
@@ -67,7 +80,7 @@ function Main({ details, setDetails }) {
                   <img
                     src={movie.Poster}
                     alt="poster not available"
-                    className="object-cover rounded-xl w-full h-48"
+                    className="object-cover rounded-xl w-full h-48 shadow-lg shadow-black"
                   />
                   <button
                     onClick={() => callDeatils(movie.imdbID)}
