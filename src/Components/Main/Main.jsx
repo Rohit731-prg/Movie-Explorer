@@ -60,7 +60,7 @@ function Main({ details, setDetails }) {
             <div className="my-3 w-3/6 flex items-center justify-between bg-white rounded-full overflow-hidden">
               <input
                 type="text"
-                placeholder='Enter Movie Name "Jawan"'
+                placeholder='Enter Movie Name "Naruto"'
                 onChange={(e) => setMovieName(e.target.value)}
                 className="border-none outline-none p-2 w-3/4 pl-4"
               />
