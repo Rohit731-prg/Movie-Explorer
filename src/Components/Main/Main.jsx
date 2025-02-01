@@ -46,7 +46,7 @@ function Main({ details, setDetails }) {
           imdbInfo={imdbInfo}
         />
       ) : (
-        <div className="w-full h-screen bg-teal-500 flex items-center justify-center">
+        <div className="w-full h-screen bg-mybg flex items-center justify-center">
           <div
             className="w-10/12 h-4/5 p-8 rounded-md flex flex-col items-center justify-center"
             style={{
